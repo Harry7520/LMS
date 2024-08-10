@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %} Borrow Book Lists {% endblock %}
+
+{% block body %}
+
+{% load static %}
+
+<style>
+  .area {
+      padding:10px 50px 0 50px;
+      text-align:center;
+  }
+</style>
+
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <form class="d-flex" role="search" action="/search_by2/">
+        <input class="form-control me-2" type="search" placeholder="Book or Student Name" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="message">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alerts {{ message.tags }} ">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <center>
+            <div classs="alert-texts">{{ message }}</div>
+        </center>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+  <div class="area">
+    {% if borrow %}
+    <table class="table table-bordered table-striped ">
+      <h3>Borrow-Book-Lists</h3>
+      <thead>
+        <tr>
+          <th scope="col">Student-ID</th>
+          <th scope="col">Student-Name</th>
+          <th scope="col">Student-Email</th>
+          <th scope="col">Student-Phone</th>
+          <th scope="col">Book-Name</th>
+          <th scope="col">Borrow Date</th>
+          <th scope="col">Deadline</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      {% for i in borrow %}
+      <tbody>
+        <tr>
+          <th scope="row">{{i.s_id}}</th>
+          <td>{{i.s_name}}</td>
+          <td>{{i.s_email}}</td>
+          <td>{{i.s_phone}}</td>
+          <td>{{i.b_name}}</td>
+          <td>{{i.create_at}}</td>
+          <td>{{i.deadline}}</td>
+          {% if i.status == "Borrow" %}
+          <td><button class="btn btn-primary disabled">{{i.status}}</button></td>
+          {% else %}
+          <td><button class="btn btn-success disabled">{{i.status}}</button></td>
+          {% endif %}
+          <td>
+            {% if i.status == "Borrow" %}
+            <a href="/returning/{{i.s_id}}/{{i.b_name}}/{{i.id}}/" class="btn btn-outline-success"><i class="bi bi-check-lg success"></i></a>
+            {% endif %}
+            <a href="/borrow/detail/{{i.id}}/" class="btn btn-outline-primary"><i class="bi bi-eye primary"></i></a>
+            <a href="/borrow/delete/{{i.id}}/" class="btn btn-outline-danger" onclick="return confirm('Are you sure?');"><i class="bi bi-trash danger"></i></a>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+      {% else %}
+       <center>
+        <h1>Nothing to Show!</h1>
+       </center>
+       
+    </table>
+    {% endif %}
+
+    {% if borrow.has_other_pages %}
+                <h6>{{ borrow }}</h6>
+<div class="box1">
+<div class="pagination">
+    <ul>
+        {% if borrow.has_previous %}
+        <li class="btn prev"><a class="tag" href="?page={{ borrow.previous_page_number }}"><span><i class="fa fa-angle-left">Previous</i></span></a></li>
+        {% else %}
+        <li class="btn prev disabled"><span><i class="fa fa-angle-left">Previous</i></span></li>
+        {% endif %}
+{% if borrow.has_next %}
+        <li class="btn next"><a class="tag" href="?page={{ borrow.next_page_number }}"><span>Next<i class="fa fa-angle-right"></i></span></a></li>
+        {% else %}
+        <li class="btn next disabled"><span>Next<i class="fa fa-angle-right"></i></span></li>
+        {% endif %}
+    </ul>
+</div>
+</div>
+{% endif %}
+    
+  </div>
+{% endblock %}

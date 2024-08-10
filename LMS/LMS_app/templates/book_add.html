@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Book Add {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<style>
+    .box1 {
+        padding: 10px;
+        border: 2px solid rgba(255, 255, 255, .2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    }
+
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 85vh;
+    }
+</style>
+
+<div class="box">
+    <div class="box1">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Add Book</h2>
+            <div class="mb-3">
+                <label for="exampleInputText" class="form-label"><b>Image</b></label>
+                <input type="file" class="form-control" id="exampleInputText" aria-describedby="emailHelp" name="image"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"><b>Name</b></label>
+                <input type="text" class="form-control" id="exampleInputPassword1" name="name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

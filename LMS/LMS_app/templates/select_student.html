@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %} select Student {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<style>
+    .box {
+        display: flex;
+        justify-content: center;
+    }
+    option:hover{
+        background-color:blue;
+        color:white;
+        cursor:pointer;
+    }
+</style>
+
+<div class="box">
+
+    <div class="card border-dark mt-3" style="height: 650px;width:1000px;">
+        <div class="card-header d-flex flex-row justify-content-between">
+            <h4>Select-Student</h4>
+            <form class="d-flex" id="searchForm">
+                <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="button" onclick="searchStudents()">Search</button>
+              </form>
+        </div>
+        <div class="card-body text-dark">
+            {% if student %}
+            <select class="form-select" size="25" aria-label="size 3 select example" id="urlDropdown">
+                {% for i in student %}
+                <option value="/borrow/add/{{book.id}}/{{i.id}}/">Student_ID : {{i.student_id}} | Name : {{i.name}} |
+                    Email : {{i.email}} | Grade : {{i.grade}} | Gender : {{i.gender}}</option>
+                {% endfor %}
+            </select>
+            {% else %}
+                <center><h1>Nothing to Show!</h1></center>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('urlDropdown').addEventListener('change', function () {
+        var url = this.value;
+        if (url) {
+            window.location.href = url;
+        }
+    });
+
+    function searchStudents() {
+      // Get the search input value
+      var input = document.getElementById('searchInput').value.toLowerCase();
+      var select = document.getElementById('urlDropdown');
+      var options = select.options;
+      
+      // Loop through the options to filter
+      for (var i = 0; i < options.length; i++) {
+        var text = options[i].textContent || options[i].innerText;
+        if (text.toLowerCase().indexOf(input) > -1) {
+          options[i].style.display = ''; // Show matching options
+        } else {
+          options[i].style.display = 'none'; // Hide non-matching options
+        }
+      }
+    }
+
+</script>
+
+{% endblock %}

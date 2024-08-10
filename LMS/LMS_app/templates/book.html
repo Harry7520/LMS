@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %} Book Lists {% endblock %}
+
+{% block body %}
+
+{% load static %}
+
+<style>
+  .area {
+    padding: 50px 50px 0 50px;
+  }
+</style>
+
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <a href="/book/add/"><button type="button" class="btn btn-primary">Add+</button></a>
+    <form class="d-flex" role="search" action="/search_by/">
+      <input class="form-control me-2" type="search" placeholder="Book Name" aria-label="Search" name="search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<div class="message">
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alerts {{ message.tags }} ">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <center>
+      <div classs="alert-texts">{{ message }}</div>
+    </center>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+<div class="area">
+  {% if book %}
+  <div class="row row-cols-1 row-cols-md-6 g-4">
+
+    {% for book in book %}
+    <div class="col">
+      <div class="card">
+        <img src="{{book.image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{book.name}}</h5>
+          <div class="d-flex flex-row justify-content-between">
+            <a href="/select/student/{{book.id}}/" class="btn btn-outline-primary mt-3">Borrow</a>
+            <a href="/book/delete/{{book.id}}/" class="btn btn-outline-danger mt-3" onclick="return confirm('Are you sure?');"><i
+                class="bi bi-trash danger"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+  {% else %}
+  <center>
+    <h1>Nothing to Show!</h1>
+  </center>
+  {% endif %}
+</div>
+
+{% endblock %}

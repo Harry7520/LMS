@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %} Borrow {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<style>
+    .box1 {
+        padding: 10px;
+        border: 2px solid rgba(255, 255, 255, .2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    }
+
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 85vh;
+    }
+</style>
+
+<div class="box">
+    <div class="box1">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"><b>Deadline</b></label>
+                <input id="date" type="date" class="form-control" id="exampleInputPassword1" name="deadline" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Borrow</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const today = new Date();
+    today.setDate(today.getDate() + 1); // Get tomorrow's date
+    const minDate = today.toISOString().split('T')[0];
+    
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + 3); // Get the date 3 days from tomorrow
+    
+    const maxDateStr = maxDate.toISOString().split('T')[0];
+    
+    document.getElementById('date').setAttribute('min', minDate);
+    document.getElementById('date').removeAttribute('max');
+</script>
+
+{% endblock %}

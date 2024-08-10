@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %} Student Edit {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<style>
+    .box1 {
+        width: 90rem;
+        padding: 50px;
+        border: 2px solid rgba(255, 255, 255, .2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    }
+
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+</style>
+
+<div class="message">
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alerts {{ message.tags }} ">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <center>
+            <div classs="alert-texts">{{ message }}</div>
+        </center>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div class="box">
+
+    <form class="row g-3 box1" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">ID</label>
+            <input type="number" value="{{student.student_id}}" class="form-control" id="inputEmail4" name="student_id" required>
+        </div>
+        <div class="col-md-4">
+            <label for="inputPassword4" class="form-label">Name</label>
+            <input type="text" value="{{student.name}}" class="form-control" id="inputPassword4" name="name" required>
+        </div>
+        <div class="col-md-4">
+            <label for="inputPassword4" class="form-label">Email</label>
+            <input type="email" value="{{student.email}}" class="form-control" id="inputPassword4" name="email" required>
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Phone</label>
+            <input type="number" value="{{student.phone}}" class="form-control" id="inputEmail4" name="phone" required>
+        </div>
+        <div class="col-4">
+            <label for="inputEmail4" class="form-label">Grade</label>
+            <select class="form-select" aria-label="select example Default" class="form-control" id="inputEmail4"
+                name="grade">
+                {% for i in grade %}
+                <option {% if student.position_id == c.id %}selected{% endif %} value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-4">
+            <label for="inputEmail4" class="form-label">Gender</label>
+            <select class="form-select" aria-label="select example Default" class="form-control" id="inputEmail4"
+                name="gender">
+                {% for i in gender %}
+                <option {% if student.position_id == c.id %}selected{% endif %} value="{{i.id}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12">
+            <label for="inputAddress2" class="form-label">Image</label>
+            {% if student.image %}
+				    <p>File uploaded at: <a href="{{student.image.url}}">{{student.image}}</a></p>
+			        {% endif %}
+            <input type="file" class="form-control" id="inputAddress2" name="image">
+        </div>
+        <div class="col-12">
+            <label for="exampleFormControlTextarea1" class="form-label">Address</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="resize:none;"
+                name="address">{{student.address}}</textarea>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %} Borrow Book List detail {% endblock %}
+
+{% block body %}
+
+{% load static %}
+<style>
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+}
+</style>
+
+
+<div class="box">
+    <div class="card" style="max-width:800px;">
+        <h4 class="card-header" style="text-align: center;">Borrow-Book-Detail</h4>
+        <div class="card-body">
+          
+            <div class="card mb-3">
+                <h5 class="card-header" style="text-align: center;">Student Details</h5>
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="{{borrow.s_image.url}}" style="width:250px;height:250px;" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Student-ID</h6><h6 class="card-text d-flex">{{borrow.s_id}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Name</h6><h6 class="card-text d-flex">{{borrow.s_name}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Gender</h6><h6 class="card-text d-flex">{{borrow.s_gender}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Grade</h6><h6 class="card-text d-flex">{{borrow.s_grade}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Email</h6><h6 class="card-text d-flex">{{borrow.s_email}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Phone</h6><h6 class="card-text d-flex">{{borrow.s_phone}}</h6></div>
+                      <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Address</h6><h6 class="card-text d-flex">{{borrow.s_address}}</h6></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                  <div class="card mb-3">
+                    <h4 class="card-header" style="text-align: center;">Book Details</h4>
+                    <img src="{{ borrow.b_image.url }}" class="card-img-top" alt="..." style="height:250px;">
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align: center;">{{borrow.b_name}}</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card">
+                    <h4 class="card-header">Borrowing Details</h4>
+                    <div class="card-body">
+                        <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Deadline</h6><h6 class="card-text d-flex">{{borrow.deadline}}</h6></div>
+                        <div class="d-flex flex-row justify-content-between"><h6 class="card-text">Borrow-Date</h6><h6 class="card-text d-flex">{{borrow.create_at}}</h6></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+          <div class="card-footer">
+            <a href="/borrow/list/" class="btn btn-primary" >Borrow-Book-Lists</a>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}
